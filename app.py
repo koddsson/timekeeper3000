@@ -6,7 +6,7 @@ import argparse
 from datetime import datetime
 
 # For the popup
-from PyZenity import GetText
+from psidialogs import ask_string as GetText
 
 from modules.twitter_module import TwitterModule
 from modules.webcam_module import WebcamModule
@@ -27,7 +27,7 @@ f = vars(args)['output']
 # There must be a better way to get last message
 last_message = ""
 if os.path.getsize(f.name) > 0:
-    last_message = f.readlines()[-1].split('ᐅ')[1].strip()
+    last_message = f.readlines()[-1].split('>')[1].strip()
 
 # Get the work being done
 text = GetText("What's going on?", last_message)
@@ -37,7 +37,7 @@ text = GetText("What's going on?", last_message)
 d = datetime.now().strftime("%Y-%m-%d %H:%M")
 
 # Write the instance to the log
-f.write("[%s] ᐅ %s\n" % (d, text))
+f.write("[%s] > %s\n" % (d, text))
 f.close()
 
 for module in module_list:
